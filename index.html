@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intralife — GTM Strategy 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --bg2: #111113;
+    --bg3: #1a1a1e;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #e8e6e0;
+    --muted: #7a7870;
+    --hint: #4a4845;
+    --green: #2dd4a0;
+    --green-bg: rgba(45,212,160,0.08);
+    --green-border: rgba(45,212,160,0.2);
+    --amber: #f0a653;
+    --amber-bg: rgba(240,166,83,0.08);
+    --amber-border: rgba(240,166,83,0.2);
+    --red: #f06060;
+    --red-bg: rgba(240,96,96,0.08);
+    --red-border: rgba(240,96,96,0.2);
+    --blue: #5b9cf6;
+    --blue-bg: rgba(91,156,246,0.08);
+    --blue-border: rgba(91,156,246,0.2);
+    --accent: #2dd4a0;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background .6s ease, color .4s ease;
+  }
+
+  /* LIGHT THEME — attivato da JS quando si esce dalla hero */
+  body.light {
+    --bg: #f9f8f5;
+    --bg2: #ffffff;
+    --bg3: #f1efe9;
+    --border: rgba(0,0,0,0.07);
+    --border2: rgba(0,0,0,0.13);
+    --text: #1a1a1c;
+    --muted: #6b6860;
+    --hint: #aaa89f;
+    --green: #0d9e72;
+    --green-bg: rgba(13,158,114,0.07);
+    --green-border: rgba(13,158,114,0.18);
+    --amber: #c47a1a;
+    --amber-bg: rgba(196,122,26,0.07);
+    --amber-border: rgba(196,122,26,0.18);
+    --red: #c94040;
+    --red-bg: rgba(201,64,64,0.07);
+    --red-border: rgba(201,64,64,0.18);
+    --blue: #2860c4;
+    --blue-bg: rgba(40,96,196,0.07);
+    --blue-border: rgba(40,96,196,0.18);
+    --accent: #0d9e72;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,10,11,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background .5s ease, border-color .4s ease;
+  }
+
+  body.light nav {
+    background: rgba(249,248,245,0.94);
+  }
+
+  .nav-brand {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: .04em;
+    transition: color .2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--hint);
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 100px 2rem 80px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-child { border-bottom: none; }
+
+  /* HERO */
+  .hero {
+    padding-top: 140px;
+    padding-bottom: 100px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 1rem;
+    max-width: 700px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--hint);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .hero-meta-item .value {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* SECTION HEADERS */
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--hint);
+    letter-spacing: .08em;
+    margin-bottom: .5rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: .75rem;
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* METRIC GRID */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color .2s, background .5s ease, color .4s ease;
+  }
+
+  .metric-card:hover { border-color: var(--border2); }
+
+  .metric-card .m-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .04em;
+    margin-bottom: .5rem;
+  }
+
+  .metric-card .m-value {
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: .3rem;
+  }
+
+  .metric-card .m-sub {
+    font-size: 11px;
+    color: var(--hint);
+  }
+
+  .metric-card.accent { border-color: var(--green-border); background: var(--green-bg); }
+  .metric-card.accent .m-value { color: var(--green); }
+
+  /* SIMULATOR */
+  .simulator {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sim-label {
+    font-size: 11px;
+    color: var(--hint);
+    letter-spacing: .04em;
+    margin-bottom: 1.25rem;
+    font-family: var(--mono);
+    text-transform: uppercase;
+  }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: .75rem;
+  }
+
+  .slider-row label {
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 180px;
+  }
+
+  .slider-row input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 3px;
+    background: var(--bg3);
+    border-radius: 2px;
+    outline: none;
+  }
+
+  .slider-row input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .slider-row .val {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    min-width: 56px;
+    text-align: right;
+  }
+
+  .sim-results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .sim-result {
+    text-align: center;
+  }
+
+  .sim-result .r-val {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--accent);
+    display: block;
+  }
+
+  .sim-result .r-label {
+    font-size: 11px;
+    color: var(--hint);
+    margin-top: 3px;
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-family: var(--mono);
+  }
+  .tag-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .tag-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+  .tag-red   { background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-border); }
+  .tag-blue  { background: var(--blue-bg);  color: var(--blue);  border: 1px solid var(--blue-border); }
+  .tag-gray  { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+
+  /* TABLE */
+  .table-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--hint);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  td.num, th.num { text-align: right; font-family: var(--mono); }
+  td.muted { color: var(--muted); }
+  td.strong { font-weight: 500; }
+
+  /* INSIGHT CARDS */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .insight-card {
+    border-left: 3px solid;
+    padding: .9rem 1.1rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .insight-card.green { border-color: var(--green); background: var(--green-bg); }
+  .insight-card.amber { border-color: var(--amber); background: var(--amber-bg); }
+  .insight-card.red   { border-color: var(--red);   background: var(--red-bg); }
+  .insight-card.blue  { border-color: var(--blue);  background: var(--blue-bg); }
+
+  .insight-card .i-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: .4rem;
+  }
+
+  .insight-card.green .i-title { color: var(--green); }
+  .insight-card.amber .i-title { color: var(--amber); }
+  .insight-card.red   .i-title { color: var(--red); }
+  .insight-card.blue  .i-title { color: var(--blue); }
+
+  /* ROADMAP */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .roadmap-phase {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .roadmap-phase::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .roadmap-phase.p1::after { background: var(--green); }
+  .roadmap-phase.p2::after { background: var(--blue); }
+  .roadmap-phase.p3::after { background: var(--amber); }
+  .roadmap-phase.p4::after { background: var(--red); }
+
+  .phase-week {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--hint);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+  }
+
+  .phase-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: .5rem;
+  }
+
+  .phase-body {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: .75rem;
+  }
+
+  .phase-budget {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* CHART WRAPPER */
+  .chart-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .chart-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--hint);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: .75rem;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 3px;
+    border-radius: 1px;
+    display: inline-block;
+  }
+
+  /* BE TABLE */
+  .be-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .be-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .be-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--hint);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .be-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .be-row:last-child { border-bottom: none; }
+  .be-row .be-key { color: var(--muted); }
+  .be-row .be-val { font-family: var(--mono); font-weight: 500; }
+  .be-row .be-val.green { color: var(--green); }
+  .be-row .be-val.amber { color: var(--amber); }
+
+  /* FUNNEL TRACK */
+  .funnel-track {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: .5rem;
+  }
+
+  .funnel-step {
+    flex: 1;
+    min-width: 160px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: border-color .2s, background .5s;
+  }
+
+  .funnel-step.fs-blue  { border-top: 3px solid var(--blue); }
+  .funnel-step.fs-amber { border-top: 3px solid var(--amber); }
+  .funnel-step.fs-green { border-top: 3px solid var(--green); }
+
+  .funnel-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    font-size: 18px;
+    color: var(--hint);
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .fs-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--hint);
+    letter-spacing: .06em;
+    margin-bottom: .4rem;
+  }
+
+  .fs-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: .4rem;
+  }
+
+  .fs-body {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: .6rem;
+  }
+
+  .fs-metric {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border2);
+    margin: 2rem 0;
+  }
+
+  /* INPUT FIELDS */
+  .input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .input-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .03em;
+  }
+
+  .input-field input[type=number] {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    width: 100%;
+    outline: none;
+    transition: border-color .2s, background .4s;
+  }
+
+  .input-field input[type=number]:focus {
+    border-color: var(--accent);
+  }
+
+  /* hide number spinners */
+  .input-field input[type=number]::-webkit-inner-spin-button,
+  .input-field input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .input-field input[type=number] { -moz-appearance: textfield; }
+
+  /* KPI LEGEND */
+  .kpi-legend {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: background .5s, border-color .4s;
+  }
+
+  .kpi-legend-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--hint);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .kpi-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .kpi-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: .6rem .75rem;
+    background: var(--bg3);
+    border-radius: 6px;
+    transition: background .4s;
+  }
+
+  .kpi-term {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: .04em;
+  }
+
+  .kpi-def {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--hint);
+    letter-spacing: .06em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero > * {
+    animation: fadeUp .6s ease both;
+  }
+
+  .hero > *:nth-child(1) { animation-delay: .1s; }
+  .hero > *:nth-child(2) { animation-delay: .2s; }
+  .hero > *:nth-child(3) { animation-delay: .3s; }
+  .hero > *:nth-child(4) { animation-delay: .4s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .metric-grid { grid-template-columns: 1fr 1fr; }
+    .sim-results { grid-template-columns: 1fr 1fr; }
+    .roadmap { grid-template-columns: 1fr 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+    .be-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .nav-date { display: none; }
+    h1 { font-size: 2.8rem; }
+    .kpi-legend-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    #economics > div[style*="grid-template-columns:1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+    .simulator > div[style*="grid-template-columns:repeat(3"] {
+      grid-template-columns: 1fr 1fr !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .metric-grid { grid-template-columns: 1fr; }
+    .roadmap { grid-template-columns: 1fr; }
+    .sim-results { grid-template-columns: 1fr 1fr; }
+    .kpi-legend-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Intralife — GTM 2026</div>
+  <ul class="nav-links">
+    <li><a href="#economics">Economics</a></li>
+    <li><a href="#strategia">Strategia</a></li>
+    <li><a href="#breakeven">Break even</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#keywords">Keyword research</a></li>
+    <li><a href="#insights">Insights</a></li>
+  </ul>
+  <div class="nav-date">Apr 2026 — Confidential</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Go-to-market strategy</div>
+  <h1>Portare Intralife<br>ai <em>primi 50 clienti</em></h1>
+  <p class="hero-sub">Piano d'azione per Google Ads, economics del business e analisi keyword per il lancio della piattaforma in Spagna.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><div class="label">Obiettivo</div><div class="value">50 clienti annual renew</div></div>
+    <div class="hero-meta-item"><div class="label">Revenue target</div><div class="value">€21.000 ARR</div></div>
+    <div class="hero-meta-item"><div class="label">Pricing</div><div class="value">€45/mese · €420/anno</div></div>
+    <div class="hero-meta-item"><div class="label">USP</div><div class="value">VeriFactu + verticalità fisio</div></div>
+  </div>
+</section>
+
+<!-- SECTION 1: ECONOMICS -->
+<section id="economics">
+  <div class="section-header">
+    <div class="section-num">01 — Economics</div>
+    <h2 class="section-title">Il modello<br>finanziario</h2>
+    <p class="section-desc">Modifica i parametri base del business per aggiornare tutti i calcoli in tempo reale.</p>
+  </div>
+
+  <!-- PARAMETRI BASE EDITABILI -->
+  <div class="simulator" style="margin-bottom:1rem">
+    <div class="sim-label">Parametri business — modifica per aggiornare tutto</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:.25rem">
+      <div class="input-field">
+        <label class="input-label">Prezzo mensile (€/mese)</label>
+        <input type="number" id="p-mrr" value="45" min="1" oninput="calcAll()">
+      </div>
+      <div class="input-field">
+        <label class="input-label">Prezzo annuale (€/anno)</label>
+        <input type="number" id="p-arr" value="420" min="1" oninput="calcAll()">
+      </div>
+      <div class="input-field">
+        <label class="input-label">Clienti obiettivo</label>
+        <input type="number" id="p-target" value="50" min="1" oninput="calcAll()">
+      </div>
+      <div class="input-field">
+        <label class="input-label">Anni vita cliente (LTV)</label>
+        <input type="number" id="p-ltv-years" value="2.5" min="0.5" step="0.5" oninput="calcAll()">
+      </div>
+      <div class="input-field">
+        <label class="input-label">Churn annuo stimato (%)</label>
+        <input type="number" id="p-churn" value="33" min="1" max="100" oninput="calcAll()">
+      </div>
+      <div class="input-field">
+        <label class="input-label">Target LTV:CAC ratio</label>
+        <input type="number" id="p-ltvcac" value="3" min="1" step="0.5" oninput="calcAll()">
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI LIVE -->
+  <div class="metric-grid" style="margin-bottom:1rem">
+    <div class="metric-card accent">
+      <div class="m-label">MRR obiettivo</div>
+      <div class="m-value" id="kpi-mrr">€2.250</div>
+      <div class="m-sub" id="kpi-mrr-sub">50 × €45/mese</div>
+    </div>
+    <div class="metric-card accent">
+      <div class="m-label">ARR obiettivo</div>
+      <div class="m-value" id="kpi-arr">€21.000</div>
+      <div class="m-sub" id="kpi-arr-sub">50 × €420/anno</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">LTV per cliente</div>
+      <div class="m-value" id="kpi-ltv">€1.050</div>
+      <div class="m-sub" id="kpi-ltv-sub">2,5 anni × €420</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">CAC max sostenibile</div>
+      <div class="m-value" id="kpi-cac">€350</div>
+      <div class="m-sub" id="kpi-cac-sub">LTV ÷ 3x target</div>
+    </div>
+  </div>
+
+  <!-- KPI LEGEND BOX -->
+  <div class="kpi-legend">
+    <div class="kpi-legend-title">Glossario KPI</div>
+    <div class="kpi-legend-grid">
+      <div class="kpi-item">
+        <span class="kpi-term">MRR</span>
+        <span class="kpi-def">Monthly Recurring Revenue — entrata mensile ricorrente da abbonamenti attivi. Base per misurare la salute del business mese per mese.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">ARR</span>
+        <span class="kpi-def">Annual Recurring Revenue — MRR × 12. Metrica principale per valutare SaaS. Obiettivo: €21.000 ARR a 50 clienti.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">LTV</span>
+        <span class="kpi-def">Lifetime Value — ricavo totale generato da un cliente per tutta la durata del rapporto. LTV = ARR × anni medi di vita del cliente.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">CAC</span>
+        <span class="kpi-def">Customer Acquisition Cost — costo totale di marketing e vendite per acquisire un singolo cliente pagante. Include budget ads + tempo founder.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">LTV:CAC</span>
+        <span class="kpi-def">Rapporto tra valore del cliente e costo di acquisizione. Soglia di salute SaaS: &gt;3x. Sotto 1x il business perde soldi su ogni cliente acquisito.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">Churn</span>
+        <span class="kpi-def">Tasso di abbandono annuo. 33% = 1 cliente su 3 cancella ogni anno. Ridurlo è più efficiente che acquisirne di nuovi.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">CPA</span>
+        <span class="kpi-def">Cost Per Acquisition — budget speso diviso numero clienti acquisiti in quel periodo. Deve restare sotto il CAC max sostenibile.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">CPL</span>
+        <span class="kpi-def">Cost Per Lead — costo per generare un contatto qualificato. Budget ÷ lead totali. Non coincide con il CPA: non tutti i lead diventano clienti.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">CVR</span>
+        <span class="kpi-def">Conversion Rate — % di visitatori che compilano il form / prenotano la demo. Benchmark B2B SaaS: 2,5–5%. Top quartile: 6–8%.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">ROAS</span>
+        <span class="kpi-def">Return On Ad Spend — entrate generate diviso spesa pubblicitaria. Es: ROAS 5x = ogni €1 in ads genera €5 di revenue. Rilevante in ottica ARR.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">Payback</span>
+        <span class="kpi-def">Mesi necessari per recuperare il CAC con il revenue del cliente. Payback = CAC ÷ MRR per cliente. Target sano: &lt;12 mesi.</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-term">CPC</span>
+        <span class="kpi-def">Cost Per Click — quanto si paga a Google o Meta per ogni clic sull'annuncio. Benchmark per questo settore in Spagna: €1,20–€2,50 (Search).</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIMULATOR DUAL CHANNEL -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem">
+
+    <!-- GOOGLE ADS -->
+    <div class="simulator">
+      <div class="sim-label" style="display:flex;align-items:center;gap:.5rem">
+        <span style="background:#4285F4;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:.04em">G</span>
+        Google Ads — Search
+      </div>
+      <div class="slider-row">
+        <label>Budget mensile (€)</label>
+        <input type="range" id="g-budget" min="300" max="3000" step="100" value="1000" oninput="calcAll()">
+        <span class="val" id="gv-budget">€1.000</span>
+      </div>
+      <div class="slider-row">
+        <label>CPC medio (€)</label>
+        <input type="range" id="g-cpc" min="0.5" max="6" step="0.1" value="1.8" oninput="calcAll()">
+        <span class="val" id="gv-cpc">€1,8</span>
+      </div>
+      <div class="slider-row">
+        <label>CVR landing (%)</label>
+        <input type="range" id="g-cvr" min="1" max="15" step="0.5" value="5" oninput="calcAll()">
+        <span class="val" id="gv-cvr">5%</span>
+      </div>
+      <div class="slider-row">
+        <label>Lead → demo (%)</label>
+        <input type="range" id="g-l2d" min="10" max="80" step="5" value="40" oninput="calcAll()">
+        <span class="val" id="gv-l2d">40%</span>
+      </div>
+      <div class="slider-row">
+        <label>Demo → cliente (%)</label>
+        <input type="range" id="g-d2c" min="10" max="60" step="5" value="30" oninput="calcAll()">
+        <span class="val" id="gv-d2c">30%</span>
+      </div>
+      <div class="sim-results" style="grid-template-columns:repeat(4,1fr)">
+        <div class="sim-result"><span class="r-val" id="gr-clicks">556</span><span class="r-label">click</span></div>
+        <div class="sim-result"><span class="r-val" id="gr-leads">28</span><span class="r-label">lead</span></div>
+        <div class="sim-result"><span class="r-val" id="gr-clients">3</span><span class="r-label">clienti</span></div>
+        <div class="sim-result"><span class="r-val" id="gr-cpa">€333</span><span class="r-label">CPA</span></div>
+      </div>
+    </div>
+
+    <!-- META ADS -->
+    <div class="simulator">
+      <div class="sim-label" style="display:flex;align-items:center;gap:.5rem">
+        <span style="background:#1877F2;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:.04em">f</span>
+        Meta Ads — Lead Gen + Demo
+      </div>
+      <div class="slider-row">
+        <label>Budget mensile (€)</label>
+        <input type="range" id="m-budget" min="300" max="3000" step="100" value="800" oninput="calcAll()">
+        <span class="val" id="mv-budget">€800</span>
+      </div>
+      <div class="slider-row">
+        <label>CPM medio (€)</label>
+        <input type="range" id="m-cpm" min="3" max="25" step="0.5" value="8" oninput="calcAll()">
+        <span class="val" id="mv-cpm">€8</span>
+      </div>
+      <div class="slider-row">
+        <label>CTR annuncio (%)</label>
+        <input type="range" id="m-ctr" min="0.5" max="5" step="0.1" value="1.5" oninput="calcAll()">
+        <span class="val" id="mv-ctr">1,5%</span>
+      </div>
+      <div class="slider-row">
+        <label>CVR landing / form (%)</label>
+        <input type="range" id="m-cvr" min="1" max="20" step="0.5" value="8" oninput="calcAll()">
+        <span class="val" id="mv-cvr">8%</span>
+      </div>
+      <div class="slider-row">
+        <label>Lead → demo (%)</label>
+        <input type="range" id="m-l2d" min="10" max="80" step="5" value="25" oninput="calcAll()">
+        <span class="val" id="mv-l2d">25%</span>
+      </div>
+      <div class="slider-row">
+        <label>Demo → cliente (%)</label>
+        <input type="range" id="m-d2c" min="10" max="60" step="5" value="25" oninput="calcAll()">
+        <span class="val" id="mv-d2c">25%</span>
+      </div>
+      <div class="sim-results" style="grid-template-columns:repeat(4,1fr)">
+        <div class="sim-result"><span class="r-val" id="mr-impressions">100k</span><span class="r-label">impression</span></div>
+        <div class="sim-result"><span class="r-val" id="mr-leads">15</span><span class="r-label">lead</span></div>
+        <div class="sim-result"><span class="r-val" id="mr-clients">1</span><span class="r-label">clienti</span></div>
+        <div class="sim-result"><span class="r-val" id="mr-cpa">€800</span><span class="r-label">CPA</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMBINED RESULTS -->
+  <div class="simulator" style="background:var(--green-bg);border-color:var(--green-border)">
+    <div class="sim-label" style="color:var(--green)">Risultato combinato — Google Ads + Meta</div>
+    <div class="sim-results" style="grid-template-columns:repeat(5,1fr);margin-top:.5rem;padding-top:.75rem">
+      <div class="sim-result"><span class="r-val" id="tot-budget">€1.800</span><span class="r-label">budget totale</span></div>
+      <div class="sim-result"><span class="r-val" id="tot-leads">43</span><span class="r-label">lead totali</span></div>
+      <div class="sim-result"><span class="r-val" id="tot-clients">4</span><span class="r-label">clienti / mese</span></div>
+      <div class="sim-result"><span class="r-val" id="tot-months">13</span><span class="r-label">mesi a obiettivo</span></div>
+      <div class="sim-result"><span class="r-val" id="tot-cpa">€450</span><span class="r-label">CPA medio</span></div>
+    </div>
+  </div>
+
+  <div class="insights-grid" style="margin-top:1.5rem">
+    <div class="insight-card green">
+      <div class="i-title">Vantaggio strutturale</div>
+      Con pricing basso (€420 ARR) e ciclo di vendita brevissimo (founder chiude la demo), il payback period è di 8–10 mesi. Per SaaS verticale è eccellente — la maggior parte dei competitor enterprise ha payback &gt; 18 mesi.
+    </div>
+    <div class="insight-card amber">
+      <div class="i-title">Rischio principale</div>
+      Il gap tra arrivo del lead e ricontatto. Dati storici: 60 lead su €2.000 di budget = CPA lead di €33. Il problema non è l'acquisizione — è la conversione post-lead. Email automation entro 5 minuti è la fix prioritaria.
+    </div>
+    <div class="insight-card red">
+      <div class="i-title">Deadline urgenza reale</div>
+      VeriFactu è obbligatoria per i liberi professionisti da luglio 2026 (non 2027). Questa scadenza vicina è il trigger urgency più potente disponibile. Va comunicata in ogni touchpoint.
+    </div>
+    <div class="insight-card blue">
+      <div class="i-title">Google vs Meta — ruoli diversi</div>
+      Google cattura domanda esistente (chi cerca attivamente). Meta crea domanda latente — fisioterapisti che non stanno cercando ma sono il target perfetto. I due canali si completano, non si sostituiscono.
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1.5: STRATEGIA -->
+<section id="strategia">
+  <div class="section-header">
+    <div class="section-num">02 — Strategia</div>
+    <h2 class="section-title">I due funnel<br>di acquisizione</h2>
+    <p class="section-desc">Google cattura chi cerca. Meta crea il bisogno in chi non sa ancora di averlo. Due canali, stesso funnel post-click.</p>
+  </div>
+
+  <!-- CHANNEL PHILOSOPHY -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:2rem">
+    <div class="be-card" style="border-color:var(--blue-border)">
+      <div class="be-title" style="color:var(--blue)">
+        <span style="background:#4285F4;color:#fff;font-size:9px;padding:2px 7px;border-radius:3px;margin-right:6px;letter-spacing:.04em">G</span>
+        Google Ads — Demand Capture
+      </div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:.85rem">
+        Intercetta i fisioterapisti che stanno <em style="color:var(--text);font-style:normal;font-weight:500">già cercando attivamente</em> un software gestionale. Keyword ad alto intent: "software fisioterapia", "programa gestión clínica". Il mercato Search vale ~490 ricerche/mese in Spagna — piccolo ma qualificatissimo.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <span class="tag tag-blue">Search intent alto</span>
+        <span class="tag tag-blue">CPC €1,50–€2,50</span>
+        <span class="tag tag-blue">CVR attesa 4–6%</span>
+      </div>
+    </div>
+    <div class="be-card" style="border-color:var(--amber-border)">
+      <div class="be-title" style="color:var(--amber)">
+        <span style="background:#1877F2;color:#fff;font-size:9px;padding:2px 7px;border-radius:3px;margin-right:6px;letter-spacing:.04em">f</span>
+        Meta Ads — Demand Generation
+      </div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:.85rem">
+        Raggiunge fisioterapisti che <em style="color:var(--text);font-style:normal;font-weight:500">non stanno cercando</em> ma hanno il problema. Azione sui pain point: fatturazione caotica, gestione appuntamenti manuale, obbligo VeriFactu imminente. Creatività: <strong style="font-weight:500;color:var(--text)">video ads</strong> (formato Reels/Stories) + <strong style="font-weight:500;color:var(--text)">grafiche statiche</strong> prodotte da Sara.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <span class="tag tag-amber">Pain point targeting</span>
+        <span class="tag tag-amber">Video + statiche Sara</span>
+        <span class="tag tag-amber">CPM €8–€12</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- META CREATIVE NOTE -->
+  <div class="insight-card amber" style="margin-bottom:2rem;border-radius:8px">
+    <div class="i-title">Nota creativa — Meta</div>
+    Il video ads deve toccare un pain point specifico nei primi 3 secondi: "Stai ancora facendo le fatture a mano?" / "Sai già che dal luglio 2026 la fatturazione elettronica è obbligatoria?" — poi mostrare Intralife in azione (screen recording della piattaforma, 30–45 sec). Le grafiche statiche di Sara fungono da retargeting e da variante per test A/B contro il video. Audience primaria: fisioterapisti 25–50, Spagna, interessi salute + software gestionale + piccola impresa.
+  </div>
+
+  <!-- GOOGLE FUNNEL -->
+  <div style="margin-bottom:2.5rem">
+    <div style="font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem">
+      <span style="background:#4285F4;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px">G</span>
+      Funnel Google Ads
+    </div>
+    <div class="funnel-track">
+      <div class="funnel-step fs-blue">
+        <div class="fs-num">01</div>
+        <div class="fs-title">Annuncio Search</div>
+        <div class="fs-body">Headline: "Software fisioterapia con VeriFactu inclusa" · "Gestisci citas, pacientes y facturas en uno". CPC stimato €1,50–€2,50. Estensioni: sitelink demo, callout VeriFactu 2026.</div>
+        <div class="fs-metric">~550 click/mese · €1.000 budget</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step fs-blue">
+        <div class="fs-num">02</div>
+        <div class="fs-title">Landing Page</div>
+        <div class="fs-body">VSL (Video Sales Letter) in apertura — 2–3 min. Headline USP forte. Sotto il fold: 1–2 interviste video di casi studio di cliniche che già usano Intralife. CTA unica: "Reserva tu demo gratuita".</div>
+        <div class="fs-metric">CVR target 4–6%</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step fs-blue">
+        <div class="fs-num">03</div>
+        <div class="fs-title">Form prenotazione</div>
+        <div class="fs-body">Form minimo: nome, email, telefono, n° fisioterapisti. Sotto il form: "Riceverai il link della demo entro 2 minuti" — aspettativa esplicita di velocità. Integrato con CRM via Make.com.</div>
+        <div class="fs-metric">Lead → demo: 40%</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step fs-green">
+        <div class="fs-num">04</div>
+        <div class="fs-title">Demo immediata</div>
+        <div class="fs-body">Email automatica &lt;5 min con link Calendly o link demo diretta. Oggetto: "Tu demo de Intralife está lista ✓". Corpo: 3 righe, CTA diretta, nessun testo di riempimento.</div>
+        <div class="fs-metric">Demo → cliente: 30%</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step fs-green">
+        <div class="fs-num">05</div>
+        <div class="fs-title">Sequenza email</div>
+        <div class="fs-body">Post-demo: 4 email su 14 giorni per chi non ha ancora convertito. Vedi dettaglio sequenza sotto.</div>
+        <div class="fs-metric">Finestra demo: 14 giorni</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- META FUNNEL -->
+  <div style="margin-bottom:2.5rem">
+    <div style="font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem">
+      <span style="background:#1877F2;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px">f</span>
+      Funnel Meta Ads
+    </div>
+    <div class="funnel-track">
+      <div class="funnel-step fs-amber">
+        <div class="fs-num">01</div>
+        <div class="fs-title">Video / Statica</div>
+        <div class="fs-body">Video ads 30–45 sec: apre su pain point, mostra il software, chiude con urgency VeriFactu. Grafiche statiche Sara: variante B per test, usate anche in retargeting. Formato: Reels, Stories, Feed.</div>
+        <div class="fs-metric">CPM €8–€12 · ~100k imp/mese</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step fs-amber">
+        <div class="fs-num">02</div>
+        <div class="fs-title">Landing / Lead Form</div>
+        <div class="fs-body">Opzione A: stessa landing Google (VSL + casi studio). Opzione B: Meta Lead Form nativo — meno frizione, più volume lead ma qualità inferiore. Testare entrambe le prime 2 settimane.</div>
+        <div class="fs-metric">CVR 6–10% (form nativo) · 3–5% (landing)</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step fs-amber">
+        <div class="fs-num">03</div>
+        <div class="fs-title">Lead qualificato</div>
+        <div class="fs-body">Segmentazione automatica via CRM: lead da Meta ricevono sequenza leggermente più educativa (più "warm-up" sulla categoria) rispetto ai lead Google già informati.</div>
+        <div class="fs-metric">Lead → demo: 25%</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step fs-green">
+        <div class="fs-num">04</div>
+        <div class="fs-title">Demo + link</div>
+        <div class="fs-body">Stesso flusso di Google: email automatica &lt;5 min, link demo diretto. Per lead Meta aggiungere una riga educativa: "Intralife è l'unico software fisioterapia già pronto per VeriFactu 2026."</div>
+        <div class="fs-metric">Demo → cliente: 25%</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step fs-green">
+        <div class="fs-num">05</div>
+        <div class="fs-title">Sequenza email</div>
+        <div class="fs-body">Condivide la stessa sequenza post-demo. Retargeting Meta attivo su chi ha visitato la landing ma non ha convertito (Custom Audience).</div>
+        <div class="fs-metric">Finestra demo: 14 giorni</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANDING PAGE DETAIL -->
+  <div style="margin-bottom:2rem">
+    <div style="font-family:var(--mono);font-size:10px;color:var(--hint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Struttura landing page</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+      <div class="be-card" style="text-align:center">
+        <div style="font-family:var(--mono);font-size:22px;font-weight:500;color:var(--accent);margin-bottom:.4rem">①</div>
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:.3rem">Hero + VSL</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">Headline USP. Video Sales Letter 2–3 min above the fold. CTA "Reserva demo".</div>
+      </div>
+      <div class="be-card" style="text-align:center">
+        <div style="font-family:var(--mono);font-size:22px;font-weight:500;color:var(--accent);margin-bottom:.4rem">②</div>
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:.3rem">Casi studio</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">1–2 video interviste di cliniche reali. Nominare città + tipo di clinica per massima identificazione.</div>
+      </div>
+      <div class="be-card" style="text-align:center">
+        <div style="font-family:var(--mono);font-size:22px;font-weight:500;color:var(--accent);margin-bottom:.4rem">③</div>
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:.3rem">Feature + VeriFactu</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">3–4 feature chiave. Blocco dedicato VeriFactu con countdown a luglio 2026.</div>
+      </div>
+      <div class="be-card" style="text-align:center">
+        <div style="font-family:var(--mono);font-size:22px;font-weight:500;color:var(--accent);margin-bottom:.4rem">④</div>
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:.3rem">Form prenotazione</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">Max 4 campi. Sotto: "Riceverai il link entro 2 minuti". Nessun ostacolo.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMAIL SEQUENCE -->
+  <div style="margin-bottom:1.5rem">
+    <div style="font-family:var(--mono);font-size:10px;color:var(--hint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Sequenza email post-demo — finestra 14 giorni</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Timing</th>
+            <th>Oggetto</th>
+            <th>Obiettivo</th>
+            <th>CTA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="strong">1 — Conferma demo</td>
+            <td class="muted">&lt; 5 min da form</td>
+            <td>Il tuo accesso a Intralife è pronto ✓</td>
+            <td>Consegnare link demo + creare aspettativa positiva</td>
+            <td><span class="tag tag-green">Accedi alla demo →</span></td>
+          </tr>
+          <tr>
+            <td class="strong">2 — Reminder VeriFactu</td>
+            <td class="muted">Giorno 2</td>
+            <td>Luglio 2026 si avvicina. Sei pronto?</td>
+            <td>Urgency normativa. Richiamare chi non ha ancora aperto la demo</td>
+            <td><span class="tag tag-amber">Scopri come →</span></td>
+          </tr>
+          <tr>
+            <td class="strong">3 — Caso studio</td>
+            <td class="muted">Giorno 5</td>
+            <td>Come la Clínica X ha ridotto il tempo admin del 40%</td>
+            <td>Social proof. Ridurre l'obiezione "funziona davvero?"</td>
+            <td><span class="tag tag-blue">Leggi il caso →</span></td>
+          </tr>
+          <tr>
+            <td class="strong">4 — Obiezione pricing</td>
+            <td class="muted">Giorno 9</td>
+            <td>€45/mese. Meno di una sessione di fisioterapia.</td>
+            <td>Neutralizzare l'obiezione sul prezzo con un frame di costo opportunità</td>
+            <td><span class="tag tag-amber">Inizia ora →</span></td>
+          </tr>
+          <tr>
+            <td class="strong">5 — Last call</td>
+            <td class="muted">Giorno 13</td>
+            <td>La tua demo scade domani</td>
+            <td>Urgency scadenza. Ultima spinta prima di chiudere il trial</td>
+            <td><span class="tag tag-red">Attiva il piano →</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DEMO WINDOW RATIONALE -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.5rem">
+    <div class="be-card" style="border-color:var(--red-border)">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">7 giorni — troppo breve</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Un fisioterapista con agenda piena potrebbe non riuscire a testare il software in una settimana lavorativa. Rischio: lead persi per mancanza di tempo, non per mancanza di interesse.</div>
+    </div>
+    <div class="be-card" style="border-color:var(--green-border)">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">14 giorni — raccomandato ✓</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Due settimane coprono due cicli di lavoro completi. Abbastanza per testare prenotazioni, fatturazione e storico pazienti in un contesto reale. Standard di mercato SaaS verticale.</div>
+    </div>
+    <div class="be-card" style="border-color:var(--amber-border)">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">30 giorni — troppo lungo</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Riduce l'urgency di conversione. Il lead dimentica perché ha "tanto tempo". Senza email di follow-up strutturata, il 30-day trial converte meno del 14-day con sequenza attiva.</div>
+    </div>
+  </div>
+
+  <div class="insight-card green" style="border-radius:8px">
+    <div class="i-title">Raccomandazione finale sul trial</div>
+    14 giorni con sequenza email in 5 step. Il giorno 13 arriva la last call con urgency scadenza. Chi non converte in 14 giorni entra in una lista "fredda" da riattivare a settembre (picco stagionale) o alla comunicazione di nuove feature. Non sprecare budget in estensioni del trial — meglio riaprire la conversazione con un nuovo angolo.
+  </div>
+</section>
+
+<!-- SECTION 3: BREAK EVEN -->
+<section id="breakeven">
+  <div class="section-header">
+    <div class="section-num">03 — Break even</div>
+    <h2 class="section-title">Quando torna<br>l'investimento</h2>
+    <p class="section-desc">Analisi del punto di pareggio a diversi livelli di budget e conversione.</p>
+  </div>
+
+  <div class="be-grid">
+    <div class="be-card">
+      <div class="be-title">Revenue model</div>
+      <div class="be-row"><span class="be-key">MRR obiettivo (50 clienti)</span><span class="be-val green">€2.250</span></div>
+      <div class="be-row"><span class="be-key">ARR obiettivo (50 clienti)</span><span class="be-val green">€21.000</span></div>
+      <div class="be-row"><span class="be-key">LTV medio per cliente</span><span class="be-val">€1.050</span></div>
+      <div class="be-row"><span class="be-key">Budget totale stimato (mese 1)</span><span class="be-val">€1.500</span></div>
+      <div class="be-row"><span class="be-key">Budget totale per 50 clienti</span><span class="be-val amber">~€8.000–€12.000</span></div>
+      <div class="be-row"><span class="be-key">ROI campagne anno 1</span><span class="be-val green">175–262%</span></div>
+    </div>
+    <div class="be-card">
+      <div class="be-title">Metriche chiave</div>
+      <div class="be-row"><span class="be-key">CPA lead (storico)</span><span class="be-val">€33</span></div>
+      <div class="be-row"><span class="be-key">CPA cliente target</span><span class="be-val amber">&lt; €350</span></div>
+      <div class="be-row"><span class="be-key">Payback period (MRR)</span><span class="be-val">8–10 mesi</span></div>
+      <div class="be-row"><span class="be-key">Payback period (ARR)</span><span class="be-val">1–1,5 mesi</span></div>
+      <div class="be-row"><span class="be-key">LTV : CAC ratio target</span><span class="be-val green">&gt; 3x</span></div>
+      <div class="be-row"><span class="be-key">Churn annuo stimato</span><span class="be-val">~33%</span></div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Proiezione clienti cumulativi — scenari confronto</div>
+    <div style="position:relative;width:100%;height:280px">
+      <canvas id="projChart" role="img" aria-label="Proiezione clienti cumulativi per diversi livelli di budget mensile">Proiezione cumulativa clienti: scenario conservativo, base e ottimistico.</canvas>
+    </div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#f06060"></span>Conservativo (€600/mese, CVR 3%)</span>
+      <span><span class="legend-dot" style="background:#f0a653"></span>Base (€1.000/mese, CVR 5%)</span>
+      <span><span class="legend-dot" style="background:#2dd4a0"></span>Ottimistico (€1.500/mese, CVR 7%)</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: ROADMAP -->
+<section id="roadmap">
+  <div class="section-header">
+    <div class="section-num">04 — Roadmap</div>
+    <h2 class="section-title">4 settimane<br>al lancio</h2>
+    <p class="section-desc">Piano operativo settimana per settimana. Settimana 1 a budget zero: solo setup e automazioni.</p>
+  </div>
+
+  <div class="roadmap">
+    <div class="roadmap-phase p1">
+      <div class="phase-week">Settimana 1</div>
+      <div class="phase-title">Setup & tracking</div>
+      <div class="phase-body">Google Tag Manager, conversioni, integrazione form → CRM, email automation &lt;5 min, landing A/B, deck demo strutturato.</div>
+      <div class="phase-budget">€0</div>
+      <div style="margin-top:.5rem"><span class="tag tag-green">Fondamenta</span></div>
+    </div>
+    <div class="roadmap-phase p2">
+      <div class="phase-week">Settimana 2</div>
+      <div class="phase-title">Lancio campagne</div>
+      <div class="phase-body">Search: brand + competitor + categoria. Adgroup: "software fisioterapia", "programa fisioterapeutas", "VeriFactu clínica".</div>
+      <div class="phase-budget">€400</div>
+      <div style="margin-top:.5rem"><span class="tag tag-blue">Go live</span></div>
+    </div>
+    <div class="roadmap-phase p3">
+      <div class="phase-week">Settimana 3</div>
+      <div class="phase-title">Ottimizzazione</div>
+      <div class="phase-body">Pausa keyword a basso CVR. A/B headline. Aggiusta CPC. Verifica lead quality. Sequenza email automatica attiva.</div>
+      <div class="phase-budget">€500</div>
+      <div style="margin-top:.5rem"><span class="tag tag-amber">Iterazione</span></div>
+    </div>
+    <div class="roadmap-phase p4">
+      <div class="phase-week">Settimana 4</div>
+      <div class="phase-title">Scale</div>
+      <div class="phase-body">Scala adgroup vincitori. Aggiungi RLSA (visitatori landing). Test Display remarketing. Review CPA e forecast 50 clienti.</div>
+      <div class="phase-budget">€600</div>
+      <div style="margin-top:.5rem"><span class="tag tag-red">Crescita</span></div>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Azione prioritaria</th>
+            <th>Impatto</th>
+            <th>Quando</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="strong">Email automation &lt; 5 min da form</td><td><span class="tag tag-red">Critico</span></td><td class="muted">Immediato</td><td class="muted">Founder / Make.com</td></tr>
+          <tr><td class="strong">Landing con social proof cliniche reali</td><td><span class="tag tag-red">Alto</span></td><td class="muted">Sett. 1</td><td class="muted">Web</td></tr>
+          <tr><td class="strong">Google Ads Search — keyword intent alto</td><td><span class="tag tag-amber">Alto</span></td><td class="muted">Sett. 2</td><td class="muted">Paid</td></tr>
+          <tr><td class="strong">Demo call strutturata (deck 15 min)</td><td><span class="tag tag-amber">Alto</span></td><td class="muted">Sett. 1</td><td class="muted">Founder</td></tr>
+          <tr><td class="strong">Copy urgency: "Obbligo VeriFactu luglio 2026"</td><td><span class="tag tag-amber">Medio</span></td><td class="muted">Sett. 2</td><td class="muted">Copy</td></tr>
+          <tr><td class="strong">Retargeting RLSA visitatori landing</td><td><span class="tag tag-blue">Medio</span></td><td class="muted">Sett. 4</td><td class="muted">Paid</td></tr>
+          <tr><td class="strong">Partnership Colegios Fisioterapeutas</td><td><span class="tag tag-green">Strategico</span></td><td class="muted">Mese 2</td><td class="muted">Founder</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: KEYWORDS -->
+<section id="keywords">
+  <div class="section-header">
+    <div class="section-num">05 — Keyword Research</div>
+    <h2 class="section-title">Analisi volumi<br>Google Ads</h2>
+    <p class="section-desc">Dati reali da Keyword Planner — periodo aprile 2025 / marzo 2026, geotargeting Spagna.</p>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Volume totale / mese</div>
+      <div class="m-value">~490</div>
+      <div class="m-sub">keyword con dati reali</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">CPC medio ponderato</div>
+      <div class="m-value">€2,58</div>
+      <div class="m-sub">range €1,12 – €9,33</div>
+    </div>
+    <div class="metric-card accent">
+      <div class="m-label">Picco stagionale</div>
+      <div class="m-value">Settembre</div>
+      <div class="m-sub">+80–160% vs media annua</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Click potenziali / mese</div>
+      <div class="m-value">50–75</div>
+      <div class="m-sub">con CTR 10–15% top position</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Trend mensile — keyword principali (apr 2025 – mar 2026)</div>
+    <div style="position:relative;width:100%;height:260px">
+      <canvas id="kwTrend" role="img" aria-label="Trend mensile volumi keyword fisioterapia con picco a settembre">Picco sistematico a settembre su tutte le keyword principali.</canvas>
+    </div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#2dd4a0"></span>software fisioterapia (90/mese)</span>
+      <span><span class="legend-dot" style="background:#5b9cf6;border-top:2px dashed #5b9cf6;background:none;width:12px"></span>software para fisioterapeutas (90/mese)</span>
+      <span><span class="legend-dot" style="background:#f0a653"></span>software clinica fisioterapia (50/mese)</span>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th class="num">Vol. medio</th>
+          <th class="num">CPC min</th>
+          <th class="num">CPC max</th>
+          <th>Competition</th>
+          <th>Decisione</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">software fisioterapia</td><td class="num">90</td><td class="num">€1,33</td><td class="num">€5,78</td><td><span class="tag tag-amber">Media 49</span></td><td><span class="tag tag-green">Principale</span></td></tr>
+        <tr><td class="strong">software para fisioterapeutas</td><td class="num">90</td><td class="num">€1,79</td><td class="num">€4,55</td><td><span class="tag tag-green">Bassa 23</span></td><td><span class="tag tag-green">Principale</span></td></tr>
+        <tr><td class="strong">software clinica fisioterapia</td><td class="num">50</td><td class="num">€1,84</td><td class="num">€4,76</td><td><span class="tag tag-amber">Media 44</span></td><td><span class="tag tag-green">Principale</span></td></tr>
+        <tr><td class="strong">programa gestion clinica fisioterapia</td><td class="num">30</td><td class="num">€2,19</td><td class="num">€6,90</td><td><span class="tag tag-red">Alta 67</span></td><td><span class="tag tag-amber">Secondaria</span></td></tr>
+        <tr><td class="strong">software fisioterapia gratis</td><td class="num">40</td><td class="num">€0,68</td><td class="num">€2,29</td><td><span class="tag tag-amber">Media 35</span></td><td><span class="tag tag-red">Negativa</span></td></tr>
+        <tr><td class="strong">software de fisioterapia</td><td class="num">20</td><td class="num">€4,41</td><td class="num">€8,63</td><td><span class="tag tag-green">Bassa 30</span></td><td><span class="tag tag-amber">Secondaria</span></td></tr>
+        <tr><td class="strong">software para clinicas de fisioterapia</td><td class="num">10</td><td class="num">€3,11</td><td class="num">€7,75</td><td><span class="tag tag-amber">Media 57</span></td><td><span class="tag tag-amber">Long tail</span></td></tr>
+        <tr><td class="strong">software gestion fisioterapia</td><td class="num">10</td><td class="num">€1,12</td><td class="num">€9,20</td><td><span class="tag tag-red">Alta 83</span></td><td><span class="tag tag-amber">Long tail</span></td></tr>
+        <tr><td class="strong">software gestion clinica fisioterapia</td><td class="num">10</td><td class="num">€2,85</td><td class="num">€11,21</td><td><span class="tag tag-amber">Media 56</span></td><td><span class="tag tag-amber">Long tail</span></td></tr>
+        <tr><td class="strong">programa gestion fisioterapia</td><td class="num">10</td><td class="num">€3,47</td><td class="num">€9,33</td><td><span class="tag tag-amber">Media 50</span></td><td><span class="tag tag-amber">Long tail</span></td></tr>
+        <tr><td class="strong">software fisioterapeutas</td><td class="num">10</td><td class="num">€1,19</td><td class="num">€3,32</td><td><span class="tag tag-amber">Media 57</span></td><td><span class="tag tag-amber">Long tail</span></td></tr>
+        <tr><td class="strong">erp fisioterapia</td><td class="num">10</td><td class="num">€0,77</td><td class="num">€2,01</td><td><span class="tag tag-amber">Media 50</span></td><td><span class="tag tag-gray">Escludi</span></td></tr>
+        <tr><td class="strong">software ejercicios fisioterapia</td><td class="num">20</td><td class="num">—</td><td class="num">—</td><td><span class="tag tag-gray">Bassa 0</span></td><td><span class="tag tag-red">Escludi</span></td></tr>
+        <tr><td class="muted" colspan="4" style="font-size:12px">facturación electrónica / verifactu / gestión pacientes / agenda online — sotto soglia minima</td><td><span class="tag tag-gray">No dati</span></td><td><span class="tag tag-gray">Solo copy</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION 5: INSIGHTS -->
+<section id="insights">
+  <div class="section-header">
+    <div class="section-num">06 — Insight strategici</div>
+    <h2 class="section-title">Cosa dicono<br>i dati</h2>
+    <p class="section-desc">Le implicazioni operative immediate che emergono dall'analisi combinata di economics, benchmark e keyword.</p>
+  </div>
+
+  <div class="insights-grid">
+    <div class="insight-card red">
+      <div class="i-title">Mercato micro — Search non basta</div>
+      490 ricerche/mese totali. Con CTR 15% in top position: 73 click/mese massimo da Search. Servono canali che creano domanda: content marketing VeriFactu, partnership Colegios de Fisioterapeutas, campagne Display per demand generation.
+    </div>
+    <div class="insight-card green">
+      <div class="i-title">Best keyword — competition bassa, volume alto</div>
+      "software para fisioterapeutas" ha competition index 23 (Bassa) con 90 ricerche/mese — identico volume di "software fisioterapia" ma molto meno conteso. È il primo adgroup da ottimizzare. CPC reale atteso: €1,50–€2,50.
+    </div>
+    <div class="insight-card amber">
+      <div class="i-title">Settembre vale il 30% del budget annuo</div>
+      Il picco settembrale (+80–160%) è sistematico su tutte le keyword. Coincide con la ripresa post-estate dei professionisti sanitari. Budget di settembre deve essere 2–3x la quota mensile proporzionale.
+    </div>
+    <div class="insight-card blue">
+      <div class="i-title">VeriFactu è copy, non keyword</div>
+      Le keyword "facturación electrónica fisioterapia" e "verifactu fisioterapia" non hanno volume rilevabile. Il mercato non cerca ancora la soluzione. Va usata come argomento persuasivo negli annunci e sulla landing, non come keyword di targeting.
+    </div>
+    <div class="insight-card red">
+      <div class="i-title">Negativa critica da aggiungere subito</div>
+      "software fisioterapia gratis" ha 40 ricerche/mese — quasi la metà del cluster principale. Va aggiunta come negativa in exact match per non sprecare budget su chi non intende pagare.
+    </div>
+    <div class="insight-card green">
+      <div class="i-title">LTV:CAC sano con funnel ottimizzato</div>
+      Con LTV di €1.050 e CPA target sotto €350, il ratio LTV:CAC è 3x — soglia di salute per SaaS SMB. Il moltiplicatore principale non è il budget ads ma il tasso di chiusura della demo, che dipende al 100% dal founder.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="background:var(--bg2);border:1px solid var(--green-border);border-radius:12px;padding:1.75rem">
+    <div style="font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem">Prossimo passo</div>
+    <p style="font-size:16px;line-height:1.7;color:var(--text);max-width:640px;margin-bottom:1rem">Struttura dettagliata delle campagne Google Ads: adgroup, match type, negative keyword list, bid strategy e copy degli annunci calibrati su questi dati reali.</p>
+    <span class="tag tag-green">Task 2 — Campaign Structure</span>
+  </div>
+</section>
+
+<footer>
+  Intralife GTM Strategy — Aprile 2026 — Uso riservato
+</footer>
+
+<script>
+function fmt(n){return Math.round(n).toLocaleString('it-IT')}
+function fmtK(n){return n>=1000?(n/1000).toFixed(0)+'k':Math.round(n).toString()}
+
+function calcAll(){
+  // --- BASE PARAMS ---
+  const mrr    = Math.max(1, +document.getElementById('p-mrr').value      || 45);
+  const arr    = Math.max(1, +document.getElementById('p-arr').value      || 420);
+  const target = Math.max(1, +document.getElementById('p-target').value   || 50);
+  const ltvYrs = Math.max(0.5,+document.getElementById('p-ltv-years').value || 2.5);
+  const churn  = Math.max(1, +document.getElementById('p-churn').value    || 33);
+  const ltvCac = Math.max(1, +document.getElementById('p-ltvcac').value   || 3);
+
+  const ltv = arr * ltvYrs;
+  const cac = ltv / ltvCac;
+
+  // KPI cards
+  document.getElementById('kpi-mrr').textContent = '€' + fmt(target * mrr);
+  document.getElementById('kpi-mrr-sub').textContent = target + ' × €' + mrr + '/mese';
+  document.getElementById('kpi-arr').textContent = '€' + fmt(target * arr);
+  document.getElementById('kpi-arr-sub').textContent = target + ' × €' + arr + '/anno';
+  document.getElementById('kpi-ltv').textContent = '€' + fmt(ltv);
+  document.getElementById('kpi-ltv-sub').textContent = ltvYrs + ' anni × €' + arr;
+  document.getElementById('kpi-cac').textContent = '€' + fmt(cac);
+  document.getElementById('kpi-cac-sub').textContent = 'LTV ÷ ' + ltvCac + 'x target';
+
+  // --- GOOGLE ADS ---
+  const gBudget = +document.getElementById('g-budget').value;
+  const gCpc    = +document.getElementById('g-cpc').value;
+  const gCvr    = +document.getElementById('g-cvr').value / 100;
+  const gL2d    = +document.getElementById('g-l2d').value / 100;
+  const gD2c    = +document.getElementById('g-d2c').value / 100;
+
+  document.getElementById('gv-budget').textContent = '€' + fmt(gBudget);
+  document.getElementById('gv-cpc').textContent    = '€' + gCpc.toFixed(1).replace('.',',');
+  document.getElementById('gv-cvr').textContent    = (gCvr*100).toFixed(1).replace('.',',') + '%';
+  document.getElementById('gv-l2d').textContent    = Math.round(gL2d*100) + '%';
+  document.getElementById('gv-d2c').textContent    = Math.round(gD2c*100) + '%';
+
+  const gClicks  = Math.round(gBudget / gCpc);
+  const gLeads   = Math.round(gClicks * gCvr);
+  const gDemos   = Math.round(gLeads * gL2d);
+  const gClients = Math.max(0, Math.round(gDemos * gD2c));
+  const gCpa     = gClients > 0 ? Math.round(gBudget / gClients) : 0;
+
+  document.getElementById('gr-clicks').textContent  = fmt(gClicks);
+  document.getElementById('gr-leads').textContent   = fmt(gLeads);
+  document.getElementById('gr-clients').textContent = gClients;
+  document.getElementById('gr-cpa').textContent     = gClients > 0 ? '€' + fmt(gCpa) : '—';
+
+  // --- META ADS ---
+  const mBudget = +document.getElementById('m-budget').value;
+  const mCpm    = +document.getElementById('m-cpm').value;
+  const mCtr    = +document.getElementById('m-ctr').value / 100;
+  const mCvr    = +document.getElementById('m-cvr').value / 100;
+  const mL2d    = +document.getElementById('m-l2d').value / 100;
+  const mD2c    = +document.getElementById('m-d2c').value / 100;
+
+  document.getElementById('mv-budget').textContent = '€' + fmt(mBudget);
+  document.getElementById('mv-cpm').textContent    = '€' + mCpm.toFixed(1).replace('.',',');
+  document.getElementById('mv-ctr').textContent    = (mCtr*100).toFixed(1).replace('.',',') + '%';
+  document.getElementById('mv-cvr').textContent    = (mCvr*100).toFixed(1).replace('.',',') + '%';
+  document.getElementById('mv-l2d').textContent    = Math.round(mL2d*100) + '%';
+  document.getElementById('mv-d2c').textContent    = Math.round(mD2c*100) + '%';
+
+  const mImpressions = Math.round((mBudget / mCpm) * 1000);
+  const mClicks      = Math.round(mImpressions * mCtr);
+  const mLeads       = Math.round(mClicks * mCvr);
+  const mDemos       = Math.round(mLeads * mL2d);
+  const mClients     = Math.max(0, Math.round(mDemos * mD2c));
+  const mCpa         = mClients > 0 ? Math.round(mBudget / mClients) : 0;
+
+  document.getElementById('mr-impressions').textContent = fmtK(mImpressions);
+  document.getElementById('mr-leads').textContent       = fmt(mLeads);
+  document.getElementById('mr-clients').textContent     = mClients;
+  document.getElementById('mr-cpa').textContent         = mClients > 0 ? '€' + fmt(mCpa) : '—';
+
+  // --- COMBINED ---
+  const totBudget  = gBudget + mBudget;
+  const totLeads   = gLeads + mLeads;
+  const totClients = gClients + mClients;
+  const totCpa     = totClients > 0 ? Math.round(totBudget / totClients) : 0;
+  const totMonths  = totClients > 0 ? Math.ceil(target / totClients) : 99;
+
+  document.getElementById('tot-budget').textContent  = '€' + fmt(totBudget);
+  document.getElementById('tot-leads').textContent   = fmt(totLeads);
+  document.getElementById('tot-clients').textContent = totClients;
+  document.getElementById('tot-months').textContent  = totMonths <= 60 ? totMonths : '>60';
+  document.getElementById('tot-cpa').textContent     = totClients > 0 ? '€' + fmt(totCpa) : '—';
+}
+
+calcAll();
+
+const months = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+
+new Chart(document.getElementById('projChart'),{
+  type:'line',
+  data:{
+    labels:months,
+    datasets:[
+      {
+        label:'Conservativo',
+        data:[0,1,2,3,4,5,6,8,10,13,16,20],
+        borderColor:'#f06060',
+        backgroundColor:'rgba(240,96,96,0.04)',
+        fill:true,
+        borderWidth:2,
+        pointRadius:3,
+        pointBackgroundColor:'#f06060',
+        tension:0.4
+      },
+      {
+        label:'Base',
+        data:[0,2,4,7,10,14,18,23,28,35,41,50],
+        borderColor:'#f0a653',
+        backgroundColor:'rgba(240,166,83,0.04)',
+        fill:true,
+        borderWidth:2,
+        pointRadius:3,
+        pointBackgroundColor:'#f0a653',
+        tension:0.4
+      },
+      {
+        label:'Ottimistico',
+        data:[0,3,7,12,18,25,32,40,50,50,50,50],
+        borderColor:'#2dd4a0',
+        backgroundColor:'rgba(45,212,160,0.04)',
+        fill:true,
+        borderWidth:2,
+        pointRadius:3,
+        pointBackgroundColor:'#2dd4a0',
+        tension:0.4
+      }
+    ]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+    scales:{
+      x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#4a4845',font:{size:11},autoSkip:false}},
+      y:{
+        grid:{color:'rgba(255,255,255,0.04)'},
+        ticks:{color:'#4a4845',font:{size:11}},
+        beginAtZero:true,
+        title:{display:true,text:'Clienti cumulativi',color:'#4a4845',font:{size:11}}
+      }
+    }
+  }
+});
+
+new Chart(document.getElementById('kwTrend'),{
+  type:'line',
+  data:{
+    labels:['Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic','Gen','Feb','Mar'],
+    datasets:[
+      {
+        label:'software fisioterapia',
+        data:[90,70,70,50,90,170,90,90,40,70,90,110],
+        borderColor:'#2dd4a0',
+        backgroundColor:'transparent',
+        borderWidth:2,
+        pointRadius:3,
+        pointBackgroundColor:'#2dd4a0',
+        tension:0.3
+      },
+      {
+        label:'software para fisioterapeutas',
+        data:[170,110,110,20,30,260,70,40,30,50,70,140],
+        borderColor:'#5b9cf6',
+        backgroundColor:'transparent',
+        borderWidth:2,
+        borderDash:[5,4],
+        pointRadius:3,
+        pointBackgroundColor:'#5b9cf6',
+        tension:0.3
+      },
+      {
+        label:'software clinica fisioterapia',
+        data:[70,70,30,20,20,170,50,40,20,20,40,70],
+        borderColor:'#f0a653',
+        backgroundColor:'transparent',
+        borderWidth:2,
+        pointRadius:3,
+        pointBackgroundColor:'#f0a653',
+        pointStyle:'rect',
+        tension:0.3
+      }
+    ]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+    scales:{
+      x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#4a4845',font:{size:11},autoSkip:false}},
+      y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#4a4845',font:{size:11}},beginAtZero:true}
+    }
+  }
+});
+</script>
+<script>
+const hero = document.querySelector('.hero');
+const observer = new IntersectionObserver(
+  ([entry]) => {
+    if (entry.isIntersecting) {
+      document.body.classList.remove('light');
+    } else {
+      document.body.classList.add('light');
+    }
+  },
+  { threshold: 0.15 }
+);
+observer.observe(hero);
+</script>
+
+</body>
+</html>
