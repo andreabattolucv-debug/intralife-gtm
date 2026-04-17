@@ -761,33 +761,140 @@
   .hero > *:nth-child(3) { animation-delay: .3s; }
   .hero > *:nth-child(4) { animation-delay: .4s; }
 
-  /* RESPONSIVE */
+  /* HAMBURGER NAV */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--muted);
+    border-radius: 2px;
+    transition: transform .25s, opacity .2s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    top: 52px; left: 0; right: 0;
+    background: rgba(10,10,11,0.97);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    padding: 1rem 1.5rem 1.5rem;
+    flex-direction: column;
+    gap: .25rem;
+  }
+  body.light .nav-drawer { background: rgba(249,248,245,0.97); }
+  .nav-drawer.open { display: flex; }
+  .nav-drawer a {
+    font-size: 15px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: .6rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: color .15s;
+  }
+  .nav-drawer a:last-child { border-bottom: none; }
+  .nav-drawer a:hover { color: var(--text); }
+
+  /* TABLET — 720px */
   @media (max-width: 720px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .nav-date { display: none; }
+    .nav-hamburger { display: flex; }
+
+    section { padding: 80px 1.25rem 60px; }
+    .hero { padding-top: 110px; padding-bottom: 60px; }
+
+    .section-title { font-size: 2rem; }
+
     .metric-grid { grid-template-columns: 1fr 1fr; }
     .sim-results { grid-template-columns: 1fr 1fr; }
     .roadmap { grid-template-columns: 1fr 1fr; }
     .insights-grid { grid-template-columns: 1fr; }
     .be-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .nav-date { display: none; }
-    h1 { font-size: 2.8rem; }
     .kpi-legend-grid { grid-template-columns: 1fr 1fr; }
+
+    .funnel-track {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .funnel-arrow {
+      transform: rotate(90deg);
+      padding: 2px 0;
+      font-size: 16px;
+    }
+    .funnel-step { min-width: unset; }
+
+    .slider-row label { min-width: 140px; font-size: 12px; }
   }
 
+  /* MOBILE — 600px */
   @media (max-width: 600px) {
-    #economics > div[style*="grid-template-columns:1fr 1fr"] {
-      grid-template-columns: 1fr !important;
-    }
-    .simulator > div[style*="grid-template-columns:repeat(3"] {
-      grid-template-columns: 1fr 1fr !important;
-    }
+    .hero h1 { font-size: 2.4rem; }
+    .hero-sub { font-size: 15px; }
+    .hero-meta { gap: 1.5rem; }
+
+    .section-title { font-size: 1.75rem; }
+
+    /* dual simulator → stack */
+    .dual-sim { grid-template-columns: 1fr !important; }
+
+    /* base params grid → 2 col */
+    .base-params { grid-template-columns: 1fr 1fr !important; }
+
+    /* combined results → wrap */
+    #tot-row { grid-template-columns: repeat(3,1fr) !important; }
+
+    /* landing blocks → 2 col */
+    .landing-blocks { grid-template-columns: 1fr 1fr !important; }
+
+    /* channel cards → stack */
+    .channel-cards { grid-template-columns: 1fr !important; }
+
+    /* demo window → stack */
+    .demo-window { grid-template-columns: 1fr !important; }
+
+    /* table horizontal scroll */
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 520px; }
+
+    .be-grid { grid-template-columns: 1fr; }
+
+    .sim-results { grid-template-columns: repeat(2,1fr); }
+    .metric-grid { grid-template-columns: 1fr 1fr; }
+    .roadmap { grid-template-columns: 1fr; }
+    .kpi-legend-grid { grid-template-columns: 1fr 1fr; }
+
+    .slider-row { flex-wrap: nowrap; gap: 8px; }
+    .slider-row label { min-width: 120px; font-size: 11px; }
+    .slider-row .val { min-width: 44px; font-size: 12px; }
+
+    .chart-wrap { padding: 1rem; }
   }
 
-  @media (max-width: 480px) {
+  /* SMALL MOBILE — 400px */
+  @media (max-width: 400px) {
+    .hero h1 { font-size: 2rem; }
+    section { padding: 70px 1rem 50px; }
     .metric-grid { grid-template-columns: 1fr; }
-    .roadmap { grid-template-columns: 1fr; }
     .sim-results { grid-template-columns: 1fr 1fr; }
     .kpi-legend-grid { grid-template-columns: 1fr; }
+    .base-params { grid-template-columns: 1fr !important; }
+    .landing-blocks { grid-template-columns: 1fr !important; }
+    table { min-width: 460px; }
+    .nav-brand { font-size: 11px; }
   }
 </style>
 </head>
@@ -805,7 +912,18 @@
     <li><a href="#insights">Insights</a></li>
   </ul>
   <div class="nav-date">Apr 2026 — Confidential</div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="#economics" onclick="closeNav()">01 — Economics</a>
+  <a href="#strategia" onclick="closeNav()">02 — Strategia</a>
+  <a href="#breakeven" onclick="closeNav()">03 — Break even</a>
+  <a href="#roadmap" onclick="closeNav()">04 — Roadmap</a>
+  <a href="#keywords" onclick="closeNav()">05 — Keyword research</a>
+  <a href="#insights" onclick="closeNav()">06 — Insights</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -831,7 +949,7 @@
   <!-- PARAMETRI BASE EDITABILI -->
   <div class="simulator" style="margin-bottom:1rem">
     <div class="sim-label">Parametri business — modifica per aggiornare tutto</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:.25rem">
+    <div class="base-params" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:.25rem">
       <div class="input-field">
         <label class="input-label">Prezzo mensile (€/mese)</label>
         <input type="number" id="p-mrr" value="45" min="1" oninput="calcAll()">
@@ -939,7 +1057,7 @@
   </div>
 
   <!-- SIMULATOR DUAL CHANNEL -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem">
+  <div class="dual-sim" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem">
 
     <!-- GOOGLE ADS -->
     <div class="simulator">
@@ -1029,7 +1147,7 @@
   <!-- COMBINED RESULTS -->
   <div class="simulator" style="background:var(--green-bg);border-color:var(--green-border)">
     <div class="sim-label" style="color:var(--green)">Risultato combinato — Google Ads + Meta</div>
-    <div class="sim-results" style="grid-template-columns:repeat(5,1fr);margin-top:.5rem;padding-top:.75rem">
+    <div id="tot-row" class="sim-results" style="grid-template-columns:repeat(5,1fr);margin-top:.5rem;padding-top:.75rem">
       <div class="sim-result"><span class="r-val" id="tot-budget">€1.800</span><span class="r-label">budget totale</span></div>
       <div class="sim-result"><span class="r-val" id="tot-leads">43</span><span class="r-label">lead totali</span></div>
       <div class="sim-result"><span class="r-val" id="tot-clients">4</span><span class="r-label">clienti / mese</span></div>
@@ -1067,7 +1185,7 @@
   </div>
 
   <!-- CHANNEL PHILOSOPHY -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:2rem">
+  <div class="channel-cards" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:2rem">
     <div class="be-card" style="border-color:var(--blue-border)">
       <div class="be-title" style="color:var(--blue)">
         <span style="background:#4285F4;color:#fff;font-size:9px;padding:2px 7px;border-radius:3px;margin-right:6px;letter-spacing:.04em">G</span>
@@ -1195,7 +1313,7 @@
   <!-- LANDING PAGE DETAIL -->
   <div style="margin-bottom:2rem">
     <div style="font-family:var(--mono);font-size:10px;color:var(--hint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Struttura landing page</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div class="landing-blocks" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
       <div class="be-card" style="text-align:center">
         <div style="font-family:var(--mono);font-size:22px;font-weight:500;color:var(--accent);margin-bottom:.4rem">①</div>
         <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:.3rem">Hero + VSL</div>
@@ -1275,7 +1393,7 @@
   </div>
 
   <!-- DEMO WINDOW RATIONALE -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.5rem">
+  <div class="demo-window" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.5rem">
     <div class="be-card" style="border-color:var(--red-border)">
       <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">7 giorni — troppo breve</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6">Un fisioterapista con agenda piena potrebbe non riuscire a testare il software in una settimana lavorativa. Rischio: lead persi per mancanza di tempo, non per mancanza di interesse.</div>
@@ -1739,6 +1857,24 @@ const observer = new IntersectionObserver(
   { threshold: 0.15 }
 );
 observer.observe(hero);
+</script>
+
+<script>
+function toggleNav(){
+  const btn = document.getElementById('hamburger');
+  const drawer = document.getElementById('navDrawer');
+  btn.classList.toggle('open');
+  drawer.classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('navDrawer').classList.remove('open');
+}
+document.addEventListener('click', e => {
+  const nav = document.querySelector('nav');
+  const drawer = document.getElementById('navDrawer');
+  if (!nav.contains(e.target) && !drawer.contains(e.target)) closeNav();
+});
 </script>
 
 </body>
